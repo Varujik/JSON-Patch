@@ -162,6 +162,10 @@ function _generate(mirror, obj, patches, path, invertible) {
 
     if (hasOwnProperty(obj, key) && !(obj[key] === undefined && oldVal !== undefined && Array.isArray(obj) === false)) {
       var newVal = obj[key];
+      
+      if (newVal instanceof Date) {
+        newVal = JSON.parse(JSON.stringify(obj[key]));
+      }
 
       if (typeof oldVal == "object" && oldVal != null && typeof newVal == "object" && newVal != null) {
         _generate(oldVal, newVal, patches, path + "/" + escapePathComponent(key), invertible);
